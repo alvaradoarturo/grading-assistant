@@ -1,4 +1,6 @@
 grader/parser/JavaParser.class
 grader/parser/Parser.class
 grader/parser/AST.class
+grader/analyzer/AnalysisResult.class
+grader/analyzer/CodeAnalyzer.class
 grader/App.class

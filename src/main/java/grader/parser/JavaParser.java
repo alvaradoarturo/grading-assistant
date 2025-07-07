@@ -10,6 +10,5 @@ public class JavaParser implements Parser {
         // page 11 of JavaParser: Visited
         CompilationUnit cu = StaticJavaParser.parse(code);
         return new AST(cu);
-
     }
 }

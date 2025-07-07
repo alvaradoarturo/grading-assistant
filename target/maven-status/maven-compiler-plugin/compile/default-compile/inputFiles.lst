@@ -1,4 +1,6 @@
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/App.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/AnalysisResult.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/CodeAnalyzer.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/AST.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/JavaParser.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/Parser.java
