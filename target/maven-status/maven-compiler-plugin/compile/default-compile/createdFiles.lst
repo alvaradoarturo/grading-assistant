@@ -1,8 +1,6 @@
 grader/FileUtil.class
-grader/analyzer/AnalysisResult.class
 grader/parser/JavaParser.class
 grader/parser/Parser.class
 grader/StudentSample.class
 grader/parser/AST.class
-grader/analyzer/CodeAnalyzer.class
 grader/App.class

@@ -1,8 +1,11 @@
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/App.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/FileUtil.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/StudentSample.java
-/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/AnalysisResult.java
-/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/CodeAnalyzer.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/StudentSample2.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/Analyzer.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/AnalyzerResult.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/LoopAnalyzer.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/LoopAnalyzerConfig.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/AST.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/JavaParser.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/Parser.java
