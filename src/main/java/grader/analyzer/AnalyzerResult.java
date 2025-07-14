@@ -1,10 +1,10 @@
 package grader.analyzer;
 
-public class AnalysisResult {
+public class AnalyzerResult {
     private final String description;
     private final int score;
 
-    public AnalysisResult(String description, int score) {
+    public AnalyzerResult(String description, int score) {
         this.description = description;
         this.score = score;
     }
