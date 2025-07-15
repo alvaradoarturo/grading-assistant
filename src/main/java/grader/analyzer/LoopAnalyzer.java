@@ -28,8 +28,8 @@ public class LoopAnalyzer implements Analyzer {
         loops.addAll(cu.findAll(WhileStmt.class));
 
         // No loops are used
-        if (loops.size() == 0) {
-            feedback.add("No loops are used");
+        if (loops.isEmpty()) {
+            feedback.add("No loops found");
             return new AnalyzerResult((String.join("\n", feedback)), score);
         }
 
@@ -39,21 +39,27 @@ public class LoopAnalyzer implements Analyzer {
             if (loop instanceof ForStmt && configuration.requireForLoop) {
                 feedback.add("For Loop was found!");
                 score++;
+            } else {
+                feedback.add("Missing For Loop");
             }
             if (loop instanceof WhileStmt && configuration.requireWhileLoop) {
                 feedback.add("While Loop was found");
                 score++;
+            } else {
+                feedback.add("Missing While Loop");
             }
 
             // check loop condition and see if there are requirements
-            if (!configuration.acceptedLoopConditions.isEmpty()) {
+            if (configuration.acceptedLoopConditions != null && !configuration.acceptedLoopConditions.isEmpty()) {
                 String loopCondition = getCondition(loop);
                 for (String condition : configuration.acceptedLoopConditions) {
                     if (condition.replaceAll("\\s+", "").equals(loopCondition)) {
                         feedback.add("+ Matching Loop Condition");
+                        score++;
                         break;
                     }
                 }
+                feedback.add("Invalid Loop Condition");
             }
         }
 
