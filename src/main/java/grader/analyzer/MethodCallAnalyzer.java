@@ -4,6 +4,9 @@ import grader.parser.AST;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.expr.MethodCallExpr;
@@ -24,25 +27,38 @@ public class MethodCallAnalyzer implements Analyzer {
         int score = 0;
 
         // list of methodCalls
-        List<MethodCallExpr> methodCalls = new ArrayList<>();
-        methodCalls.addAll(cu.findAll(MethodCallExpr.class));
+        List<MethodCallExpr> allMethods = new ArrayList<>();
+        allMethods.addAll(cu.findAll(MethodCallExpr.class));
+        // turn into set of easy use
+        Set<String> methodCalls = allMethods.stream().map(MethodCallExpr::getNameAsString).collect(Collectors.toSet());
 
         if (methodCalls.isEmpty()) {
             feedback.add("No method calls");
             return new AnalyzerResult((String.join("\n'", feedback)), score);
         }
 
-        for (MethodCallExpr method : methodCalls) {
-            String methodName = method.getNameAsString();
-            if (configuration.requiredMethodCalls.contains(methodName)) {
-                feedback.add("Method call: " + methodName + " found");
-                score++;
-            }
-            if (configuration.forbiddenMethodCalls.contains(methodName)) {
-                feedback.add("Forbidden method call: " + methodName + " found");
-                score = -1000;
+        // Sees if there is a list of forbidden methods
+        if (!configuration.forbiddenMethodCalls.isEmpty()) {
+            for (String method : configuration.forbiddenMethodCalls) {
+                if (methodCalls.contains(method)) {
+                    feedback.add("Forbidden Method Called: " + method);
+                    score = -1000;
+                }
             }
         }
+        // Sees if there is a list of required methods
+        if (!configuration.requiredMethodCalls.isEmpty()) {
+            for (String method : configuration.requiredMethodCalls) {
+                if (methodCalls.contains(method)) {
+                    feedback.add("Required Method Called: " + method);
+                    score++;
+                } else {
+                    feedback.add("Missing Method: " + method);
+                    score--;
+                }
+            }
+        }
+
         return new AnalyzerResult((String.join("\n", feedback)), score);
     }
 }

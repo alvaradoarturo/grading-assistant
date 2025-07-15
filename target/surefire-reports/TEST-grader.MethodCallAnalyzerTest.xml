@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="grader.JavaParserTest" time="0.003" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="grader.MethodCallAnalyzerTest" time="0.061" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -58,7 +58,5 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="shouldHaveClasssTwo" classname="grader.JavaParserTest" time="0.001"/>
-  <testcase name="shouldHaveMethod" classname="grader.JavaParserTest" time="0.001"/>
-  <testcase name="shouldHaveClass" classname="grader.JavaParserTest" time="0.001"/>
+  <testcase name="callsCorrectMethodOnly" classname="grader.MethodCallAnalyzerTest" time="0.06"/>
 </testsuite>

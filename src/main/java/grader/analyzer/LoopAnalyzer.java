@@ -50,7 +50,7 @@ public class LoopAnalyzer implements Analyzer {
             }
 
             // check loop condition and see if there are requirements
-            if (configuration.acceptedLoopConditions != null && !configuration.acceptedLoopConditions.isEmpty()) {
+            if (!configuration.acceptedLoopConditions.isEmpty()) {
                 String loopCondition = getCondition(loop);
                 for (String condition : configuration.acceptedLoopConditions) {
                     if (condition.replaceAll("\\s+", "").equals(loopCondition)) {

@@ -1,5 +1,11 @@
+grader/analyzer/AnalyzerResult.class
 grader/FileUtil.class
+grader/analyzer/LoopAnalyzerConfig.class
+grader/analyzer/MethodCallAnalyzerConfig.class
 grader/parser/JavaParser.class
 grader/parser/Parser.class
+grader/analyzer/LoopAnalyzer.class
+grader/analyzer/Analyzer.class
 grader/parser/AST.class
 grader/App.class
+grader/analyzer/MethodCallAnalyzer.class
