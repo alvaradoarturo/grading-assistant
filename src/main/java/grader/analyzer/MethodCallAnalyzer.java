@@ -5,14 +5,18 @@ import grader.parser.AST;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.expr.ArrayAccessExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.ForStmt;
+import com.github.javaparser.ast.stmt.IfStmt;
+import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.WhileStmt;
 
 import grader.analyzer.AnalyzerResult;
@@ -62,8 +66,7 @@ public class MethodCallAnalyzer implements Analyzer {
                 }
             }
         }
-        // Sees if there is a list of methods that need to be called in the context of a
-        // loop
+        // Checks methods that need to be called in the context of a loop
         if (!configuration.requiredCallsInLoop.isEmpty()) {
             // Get all loops in same list
             List<Node> loops = new ArrayList<>();
@@ -104,7 +107,74 @@ public class MethodCallAnalyzer implements Analyzer {
                 }
             }
         }
+        // Checks methods that need to be called in the context of a conditional stmt
+        if (!configuration.requiredCallsInConditional.isEmpty()) {
+            // Get all ifs
+            List<IfStmt> allIfs = cu.findAll(IfStmt.class);
+            // Method calls inside of conditionals
+            List<MethodCallExpr> methodsInsideConditionals = new ArrayList<>();
+            Set<String> methodsNamesInsideConditionals = new HashSet<>();
+
+            List<String> found = new ArrayList<>();
+            List<String> missing = new ArrayList<>();
+
+            // get all methods at appear in conditionals.... just once!
+            for (IfStmt conditionalStmt : allIfs) {
+                if (isPartOfElseIf(conditionalStmt))
+                    continue;
+
+                methodsInsideConditionals.addAll(conditionalStmt.getThenStmt().findAll(MethodCallExpr.class));
+
+                Optional<Statement> currentElse = conditionalStmt.getElseStmt();
+                while (currentElse.isPresent()) {
+                    Statement stmt = currentElse.get();
+
+                    if (stmt instanceof IfStmt) {
+                        IfStmt elseIf = (IfStmt) stmt;
+                        methodsInsideConditionals.addAll(elseIf.getThenStmt().findAll(MethodCallExpr.class));
+                        currentElse = elseIf.getElseStmt();
+                    } else {
+                        methodsInsideConditionals.addAll(stmt.findAll(MethodCallExpr.class));
+                        break;
+                    }
+                }
+            }
+
+            // take all method calls and abstract method names
+            for (MethodCallExpr method : methodsInsideConditionals) {
+                methodsNamesInsideConditionals.add(method.getNameAsString());
+            }
+
+            // see if we find methods needed based on config file
+            for (String method : configuration.requiredCallsInConditional) {
+                if (methodsNamesInsideConditionals.contains(method)) {
+                    found.add(method);
+                } else {
+                    missing.add(method);
+                }
+            }
+            // Add results to feedback
+            if (!found.isEmpty()) {
+                feedback.add("Calls inside conditionals: " + String.join(", ", found));
+            }
+            if (!missing.isEmpty()) {
+                feedback.add("Missing required method calls inside conditionals: " + String.join(", ", missing));
+            }
+        }
 
         return new AnalyzerResult((String.join("\n", feedback)), score);
+    }
+
+    public boolean isPartOfElseIf(IfStmt stmt) {
+        if (!stmt.getParentNode().isPresent())
+            return false;
+
+        Node parent = stmt.getParentNode().get();
+        if (parent instanceof IfStmt) {
+            IfStmt parentIf = (IfStmt) parent;
+            return parentIf.getElseStmt().isPresent() && parentIf.getElseStmt().get() == stmt;
+        }
+
+        return false;
     }
 }

@@ -7,6 +7,14 @@ public class MethodCallSample {
         log("Simulation started");
 
         int steps = 5;
+
+        if (steps == 5) {
+            simulator.reset();
+        } else if (steps > 5) {
+            simulator.simulate();
+        } else {
+            simulator.step();
+        }
         for (int i = 0; i < steps; i++) {
             simulator.step();
         }
