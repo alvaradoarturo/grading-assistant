@@ -32,4 +32,21 @@ public class MethodCallAnalyzerTest {
         assertTrue(result.getDescription().contains("Required Method"));
 
     }
+
+    @Test
+    public void checksForCallsInsideLoop() throws Exception {
+        String code = FileUtil.readStudentCode(
+                "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/MethodCallSample.java");
+        Parser parser = new JavaParser();
+        AST ast = parser.parse(code);
+
+        MethodCallAnalyzerConfig config = new MethodCallAnalyzerConfig();
+        config.requiredCallsInLoop = Arrays.asList("step", "doesntExist");
+        MethodCallAnalyzer analyzer = new MethodCallAnalyzer(config);
+
+        AnalyzerResult result = analyzer.analyze(ast);
+
+        assertTrue(result.getDescription().contains("Calls inside loops: step"));
+        assertTrue(result.getDescription().contains("Missing required method calls inside loops: doesntExist"));
+    }
 }

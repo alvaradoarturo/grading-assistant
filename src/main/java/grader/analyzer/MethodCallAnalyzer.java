@@ -3,13 +3,17 @@ package grader.analyzer;
 import grader.parser.AST;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.stmt.ForStmt;
+import com.github.javaparser.ast.stmt.WhileStmt;
 
 import grader.analyzer.AnalyzerResult;
 import grader.analyzer.MethodCallAnalyzerConfig;
@@ -55,6 +59,48 @@ public class MethodCallAnalyzer implements Analyzer {
                 } else {
                     feedback.add("Missing Method: " + method);
                     score--;
+                }
+            }
+        }
+        // Sees if there is a list of methods that need to be called in the context of a
+        // loop
+        if (!configuration.requiredCallsInLoop.isEmpty()) {
+            // Get all loops in same list
+            List<Node> loops = new ArrayList<>();
+            loops.addAll(cu.findAll(ForStmt.class));
+            loops.addAll(cu.findAll(WhileStmt.class));
+            if (loops.isEmpty()) {
+                feedback.add("No method called in context of a loop");
+                score--;
+            } else {
+                // Get all method calls that exist within loops
+                Set<String> methodsInLoops = new HashSet<>();
+                List<String> found = new ArrayList<>();
+                List<String> missing = new ArrayList<>();
+
+                for (Node loop : loops) {
+                    List<MethodCallExpr> methodsFound = loop.findAll(MethodCallExpr.class);
+
+                    for (MethodCallExpr method : methodsFound) {
+                        methodsInLoops.add(method.getNameAsString());
+                    }
+                }
+                // See if each required loop is found
+                for (String method : configuration.requiredCallsInLoop) {
+                    if (methodsInLoops.contains(method)) {
+                        found.add(method);
+                    } else {
+                        missing.add(method);
+                    }
+                }
+
+                // Add results to feedback
+                if (!found.isEmpty()) {
+                    feedback.add("Calls inside loops: " + String.join(", ", found));
+                }
+
+                if (!missing.isEmpty()) {
+                    feedback.add("Missing required method calls inside loops: " + String.join(", ", missing));
                 }
             }
         }
