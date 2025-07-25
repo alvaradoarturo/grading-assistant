@@ -71,7 +71,7 @@ public class StudentSample {
     }
 
     // Nested loop example
-    public void compareScores(StudentSample other) {
+    pblic void compareScores(StudentSample other) {
         for (int i = 0; i < this.scores.length; i++) {
             for (int j = 0; j < other.scores.length; j++) {
                 if (this.scores[i] == other.scores[j]) {

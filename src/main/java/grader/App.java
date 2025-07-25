@@ -2,6 +2,7 @@ package grader;
 
 import grader.parser.JavaParser;
 import grader.parser.Parser;
+import grader.runner.JUnitTestRunner;
 import grader.analyzer.AnalyzerResult;
 import grader.analyzer.MethodCallAnalyzer;
 import grader.analyzer.MethodCallAnalyzerConfig;
@@ -9,11 +10,6 @@ import grader.parser.AST;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-
-import com.github.javaparser.ast.body.*;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.stmt.SwitchStmt;
 
 public class App {
     public static void main(String[] args) throws IOException {
@@ -31,6 +27,9 @@ public class App {
         AnalyzerResult result = analyzer.analyze(ast);
 
         System.out.println(result.getDescription());
+
+        JUnitTestRunner jRunner = new JUnitTestRunner();
+        jRunner.runTests();
 
     }
 }
