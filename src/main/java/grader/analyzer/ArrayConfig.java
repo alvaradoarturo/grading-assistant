@@ -1,6 +1,6 @@
 package grader.analyzer;
 
-public class ArrayUsageConfig {
+public class ArrayConfig {
     public boolean requireArrayDeclaration = false;
     public String requireInitialization = "";
     public boolean requireArrayAcess = false;
