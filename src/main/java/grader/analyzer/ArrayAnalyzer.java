@@ -33,11 +33,11 @@ public class ArrayAnalyzer implements Analyzer {
                 }
             }
             if (!isFound) {
-                feedback.add("Array Delcaration was not found");
+                feedback.add("Array Declaration Not Found");
                 score -= 1;
             }
         }
 
-        return new AnalyzerResult(null, 0);
+        return new AnalyzerResult((String.join("\n", feedback)), score);
     }
 }
