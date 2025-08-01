@@ -37,7 +37,7 @@ public class MethodCallAnalyzer implements Analyzer {
         // list of methodCalls
         List<MethodCallExpr> allMethods = new ArrayList<>();
         allMethods.addAll(cu.findAll(MethodCallExpr.class));
-        // turn into set of easy use
+        // turn into set for easy use
         Set<String> methodCalls = allMethods.stream().map(MethodCallExpr::getNameAsString).collect(Collectors.toSet());
 
         if (methodCalls.isEmpty()) {
