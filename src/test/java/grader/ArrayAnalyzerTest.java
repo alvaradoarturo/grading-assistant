@@ -26,7 +26,7 @@ public class ArrayAnalyzerTest {
 
         // Custom Figuration
         ArrayConfig config = new ArrayConfig();
-        config.requireArrayDeclaration = true;
+        config.requiredArrayName = "allQuestions";
 
         ArrayAnalyzer analyzer = new ArrayAnalyzer(config);
         AnalyzerResult result = analyzer.analyze(ast);
@@ -47,7 +47,7 @@ public class ArrayAnalyzerTest {
 
         // Custom Figuration
         ArrayConfig config = new ArrayConfig();
-        config.requireArrayDeclaration = true;
+        config.requiredArrayName = "allQuestions";
 
         ArrayAnalyzer analyzer = new ArrayAnalyzer(config);
         AnalyzerResult result = analyzer.analyze(ast);

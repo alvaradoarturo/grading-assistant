@@ -1,11 +1,9 @@
 package grader.analyzer;
 
+import java.util.List;
+
 public class ArrayConfig {
-    public boolean requireArrayDeclaration = false;
-    public String requireInitialization = "";
-    public boolean requireArrayAcess = false;
-    public boolean requireArrayLengthUsage = false;
+    public String requiredArrayName = "";
     public boolean requireLoopOverArray = false;
-    public boolean checkHardCodedValues = false;
 
 }

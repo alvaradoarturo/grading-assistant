@@ -5,24 +5,24 @@ public class StudentSample {
     private int id;
     public static int studentCount = 0;
 
-    private int[] scores;
+    private int[] allQuestions;
 
     public StudentSample(String name, int id) {
         this.name = name;
         this.id = id;
-        this.scores = new int[] { 85, 90, 92, 88 };
+        this.allQuestions = new int[] { 85, 90, 92, 88 };
         studentCount++;
     }
 
     public int getScoreAt(int index) {
-        if (index < 0 || index >= scores.length)
+        if (index < 0 || index >= allQuestions.length)
             return -1;
-        return scores[index];
+        return allQuestions[index];
     }
 
     public int calculateSum() {
         int sum = 0;
-        for (int score : scores) {
+        for (int score : allQuestions) {
             sum += score;
         }
         return sum;
@@ -36,7 +36,7 @@ public class StudentSample {
 
     public void printPerformance() {
         int total = calculateSum(); // method call
-        switch (total / scores.length) {
+        switch (total / allQuestions.length) {
             case 90:
             case 91:
             case 92:
@@ -54,7 +54,7 @@ public class StudentSample {
     }
 
     public boolean hasPerfectScore() {
-        for (int score : scores) {
+        for (int score : allQuestions) {
             if (score == 100)
                 return true;
         }
@@ -63,7 +63,7 @@ public class StudentSample {
 
     // Overloaded method
     public boolean hasScoreAbove(int threshold) {
-        for (int score : scores) {
+        for (int score : allQuestions) {
             if (score > threshold)
                 return true;
         }
@@ -71,11 +71,11 @@ public class StudentSample {
     }
 
     // Nested loop example
-    public void compareScores(StudentSample other) {
-        for (int i = 0; i < this.scores.length; i++) {
-            for (int j = 0; j < other.scores.length; j++) {
-                if (this.scores[i] == other.scores[j]) {
-                    System.out.println("Common score: " + this.scores[i]);
+    public void compareallQuestions(StudentSample other) {
+        for (int i = 0; i < this.allQuestions.length; i++) {
+            for (int j = 0; j < other.allQuestions.length; j++) {
+                if (this.allQuestions[i] == other.allQuestions[j]) {
+                    System.out.println("Common score: " + this.allQuestions[i]);
                 }
             }
         }
