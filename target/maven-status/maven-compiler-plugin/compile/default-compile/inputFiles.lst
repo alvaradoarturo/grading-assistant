@@ -8,6 +8,8 @@
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/LoopAnalyzerConfig.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/MethodCallAnalyzer.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/MethodCallAnalyzerConfig.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/RecursionAnalyzer.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/analyzer/RecursionConfig.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/AST.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/JavaParser.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/Parser.java

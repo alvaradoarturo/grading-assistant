@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: grader.ArrayAnalyzerTest
+Test set: grader.RecursionAnalyzerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in grader.ArrayAnalyzerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s -- in grader.RecursionAnalyzerTest

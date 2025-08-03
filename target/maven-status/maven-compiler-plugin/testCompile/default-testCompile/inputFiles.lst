@@ -3,3 +3,4 @@
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/test/java/grader/JavaParserTest.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/test/java/grader/LoopAnalyzerTest.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/test/java/grader/MethodCallAnalyzerTest.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/test/java/grader/RecursionAnalyzerTest.java
