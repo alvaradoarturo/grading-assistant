@@ -7,6 +7,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.stmt.ForStmt;
 
+import grader.analyzer.configs.ArrayConfig;
 import grader.parser.AST;
 
 public class ArrayAnalyzer implements Analyzer {

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import grader.analyzer.AnalyzerResult;
 import grader.analyzer.MethodCallAnalyzer;
-import grader.analyzer.MethodCallAnalyzerConfig;
+import grader.analyzer.configs.MethodCallAnalyzerConfig;
 import grader.parser.AST;
 import grader.parser.JavaParser;
 import grader.parser.Parser;

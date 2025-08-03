@@ -1,4 +1,4 @@
-package grader.analyzer;
+package grader.analyzer.configs;
 
 import java.util.List;
 

@@ -20,7 +20,7 @@ import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.WhileStmt;
 
 import grader.analyzer.AnalyzerResult;
-import grader.analyzer.MethodCallAnalyzerConfig;
+import grader.analyzer.configs.MethodCallAnalyzerConfig;
 
 public class MethodCallAnalyzer implements Analyzer {
     private final MethodCallAnalyzerConfig configuration;

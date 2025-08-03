@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import grader.analyzer.AnalyzerResult;
 import grader.analyzer.LoopAnalyzer;
-import grader.analyzer.LoopAnalyzerConfig;
 import grader.analyzer.RecursionAnalyzer;
-import grader.analyzer.RecursionConfig;
+import grader.analyzer.configs.LoopAnalyzerConfig;
+import grader.analyzer.configs.RecursionConfig;
 import grader.parser.AST;
 import grader.parser.JavaParser;
 import grader.parser.Parser;

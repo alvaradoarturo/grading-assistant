@@ -5,7 +5,7 @@ import grader.parser.Parser;
 import grader.runner.JUnitTestRunner;
 import grader.analyzer.AnalyzerResult;
 import grader.analyzer.MethodCallAnalyzer;
-import grader.analyzer.MethodCallAnalyzerConfig;
+import grader.analyzer.configs.MethodCallAnalyzerConfig;
 import grader.parser.AST;
 
 import java.io.IOException;

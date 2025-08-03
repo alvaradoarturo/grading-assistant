@@ -4,6 +4,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.stmt.*;
 
+import grader.analyzer.configs.LoopAnalyzerConfig;
 import grader.parser.AST;
 
 import java.util.ArrayList;

@@ -7,6 +7,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 
+import grader.analyzer.configs.RecursionConfig;
 import grader.parser.AST;
 
 public class RecursionAnalyzer implements Analyzer {

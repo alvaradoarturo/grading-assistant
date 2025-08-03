@@ -8,7 +8,7 @@ import grader.FileUtil;
 
 import grader.analyzer.AnalyzerResult;
 import grader.analyzer.LoopAnalyzer;
-import grader.analyzer.LoopAnalyzerConfig;
+import grader.analyzer.configs.LoopAnalyzerConfig;
 import grader.parser.Parser;
 import grader.parser.AST;
 import grader.parser.JavaParser;
