@@ -1,4 +1,6 @@
-grader/MethodCallAnalyzerTest.class
 grader/JavaParserTest.class
 grader/AppTest.class
+grader/MethodCallAnalyzerTest.class
 grader/LoopAnalyzerTest.class
+grader/RecursionAnalyzerTest.class
+grader/ArrayAnalyzerTest.class

@@ -1,5 +1,8 @@
 grader/analyzer/AnalyzerResult.class
 grader/FileUtil.class
+grader/analyzer/configs/ArrayConfig.class
+grader/analyzer/RecursionAnalyzer.class
+grader/analyzer/configs/LoopAnalyzerConfig.class
 grader/runner/JUnitTestRunner.class
 grader/parser/JavaParser.class
 grader/runner/GradingTestRunner.class
@@ -7,8 +10,11 @@ grader/report/TestOutput.class
 grader/analyzer/LoopAnalyzer.class
 grader/parser/AST.class
 grader/analyzer/MethodCallAnalyzer.class
-grader/analyzer/LoopAnalyzerConfig.class
-grader/analyzer/MethodCallAnalyzerConfig.class
+grader/analyzer/ArrayAnalyzer.class
+grader/analyzer/ClassAnalyzer.class
 grader/parser/Parser.class
 grader/analyzer/Analyzer.class
+grader/analyzer/configs/ClassConfig.class
 grader/App.class
+grader/analyzer/configs/RecursionConfig.class
+grader/analyzer/configs/MethodCallAnalyzerConfig.class
