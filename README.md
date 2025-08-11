@@ -19,6 +19,6 @@ The following analyzers are currently implemented in the Grading Assistant:
 | **LoopAnalyzer**       | Checks for loop usage, specific loop types (`for`, `while`), bounds correctness, and more.      | Verify student loops from index `0` to `array.length - 1`.          |
 | **MethodCallAnalyzer**| Detects presence or absence of required method calls, forbidden method usage, and call context. | Ensure a student calls `simulate()` inside a loop or conditional.   |
 | **ArrayAnalyzer**     | Verifies array declaration, initialization, and traversal (including enhanced `for` loops).      | Check that `allQuestions` is properly declared and fully traversed. |
-| **ClassAnalyzer**     | Verifies class declaration, instance variables, and constructors.     |  |
+| **ClassAnalyzer**     | Verifies class declaration, instance variables, constructors, and method signatures.      |  |
 
 Each analyzer is **configurable per lab**, allowing for flexible grading of various AP CSA FRQ-style problems.
