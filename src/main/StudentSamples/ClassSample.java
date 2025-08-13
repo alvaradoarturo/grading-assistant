@@ -5,6 +5,10 @@ public class ClassSample {
         cupcakeCount = initialCount;
     }
 
+    public ClassSample(String testing, int numberTest) {
+        continue;
+    }
+
     public void makeCupcake() {
         cupcakeCount++;
     }

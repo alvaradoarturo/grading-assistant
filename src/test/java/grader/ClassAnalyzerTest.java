@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ import grader.parser.Parser;
 
 public class ClassAnalyzerTest {
     @Test
-    public void checksForLoops() throws IOException {
+    public void checkClassName() throws IOException {
         String code = FileUtil.readStudentCode(
                 "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/ClassSample.java");
         Parser parser = new JavaParser();
@@ -32,5 +33,42 @@ public class ClassAnalyzerTest {
         AnalyzerResult result = analyzer.analyze(ast);
 
         assertTrue(result.getDescription().contains(config.requiredClassName + "found"));
+    }
+
+    @Test
+    public void checksMatchingListOfConstructors() throws IOException {
+        String code = FileUtil.readStudentCode(
+                "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/ClassSample.java");
+        Parser parser = new JavaParser();
+        AST ast = parser.parse(code);
+
+        // Custom Configuration
+        ClassConfig config = new ClassConfig();
+        config.requiredConstructors = List.of(
+                List.of("int"),
+                List.of("String, int"));
+
+        ClassAnalyzer analyzer = new ClassAnalyzer(config);
+        AnalyzerResult result = analyzer.analyze(ast);
+
+        assertTrue(result.getDescription().contains("Matched Constructor"));
+    }
+
+    @Test
+    public void checksMissingConstructors() throws IOException {
+        String code = FileUtil.readStudentCode(
+                "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/ClassSample.java");
+        Parser parser = new JavaParser();
+        AST ast = parser.parse(code);
+
+        // Custom Configuration
+        ClassConfig config = new ClassConfig();
+        config.requiredConstructors = List.of(
+                List.of("boolean"));
+
+        ClassAnalyzer analyzer = new ClassAnalyzer(config);
+        AnalyzerResult result = analyzer.analyze(ast);
+
+        assertTrue(result.getDescription().contains("Missing Constructor"));
     }
 }

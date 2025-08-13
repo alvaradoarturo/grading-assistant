@@ -9,6 +9,7 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 
 import grader.analyzer.configs.ClassConfig;
 import grader.parser.AST;
@@ -41,10 +42,35 @@ public class ClassAnalyzer implements Analyzer {
                 feedback.add("Class: " + configuration.requiredClassName + " not found");
             }
         }
+
         // see if signature of constructor(s) is correct
         if (!configuration.requiredConstructors.isEmpty()) {
             List<ConstructorDeclaration> constructors = cu.findAll(ConstructorDeclaration.class);
-            
+            List<List<String>> constructorParamTypes = new ArrayList<>();
+
+            for (ConstructorDeclaration constructor : constructors) {
+                List<String> paramTypes = new ArrayList<>();
+                for (Parameter param : constructor.getParameters()) {
+                    paramTypes.add(param.getType().asString()); // "int", "String", etc.
+                }
+                constructorParamTypes.add(paramTypes);
+            }
+
+            for (List<String> requiredParameters : configuration.requiredConstructors) {
+                boolean found = false;
+                for (List<String> studentParameters : constructorParamTypes) {
+                    if (requiredParameters.equals(studentParameters)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    feedback.add("Matched Constructor: " + requiredParameters);
+                } else {
+                    feedback.add("Missing Constructor: " + requiredParameters);
+                }
+            }
+
         }
 
         return new AnalyzerResult((String.join("\n", feedback)), score);

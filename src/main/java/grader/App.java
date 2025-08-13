@@ -12,6 +12,7 @@ import grader.parser.AST;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
@@ -23,6 +24,8 @@ public class App {
 
         ClassConfig config = new ClassConfig();
         config.requiredClassName = "yo";
+        config.requiredConstructors = List.of(
+                List.of("String"));
         ClassAnalyzer analyzer = new ClassAnalyzer(config);
 
         AnalyzerResult result = analyzer.analyze(ast);
