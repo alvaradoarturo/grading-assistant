@@ -86,6 +86,9 @@ public class ClassAnalyzer implements Analyzer {
             }
 
             List<String> missing = new ArrayList<>(configuration.requiredFieldTypes);
+            System.out.println(missing);
+
+            System.out.println("all field types " + fieldTypes);
             for (String studentType : fieldTypes) {
                 missing.remove(studentType);
             }

@@ -1,12 +1,14 @@
 public class ClassSample {
-    private inttt cupcakeCount;
+    private int cupcakeCount;
+    private int secondInt;
+    private String testString;
 
     public ClassSample(int initialCount) {
         cupcakeCount = initialCount;
     }
 
     public ClassSample(String testing, int numberTest) {
-        continue;
+
     }
 
     public void makeCupcake() {
