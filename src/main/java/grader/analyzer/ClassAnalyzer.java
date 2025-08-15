@@ -1,6 +1,7 @@
 package grader.analyzer;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,6 +10,7 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 
 import grader.analyzer.configs.ClassConfig;
@@ -69,6 +71,28 @@ public class ClassAnalyzer implements Analyzer {
                 } else {
                     feedback.add("Missing Constructor: " + requiredParameters);
                 }
+            }
+        }
+        if (!configuration.requiredFieldTypes.isEmpty()) {
+            List<FieldDeclaration> fields = cu.findAll(FieldDeclaration.class);
+            List<String> fieldTypes = new ArrayList<>();
+
+            for (FieldDeclaration feild : fields) {
+                fieldTypes.add(feild.getElementType().asString());
+
+                if (!feild.isPrivate()) {
+                    feedback.add("field: " + feild.toString() + " is not private");
+                }
+            }
+
+            List<String> missing = new ArrayList<>(configuration.requiredFieldTypes);
+            for (String studentType : fieldTypes) {
+                missing.remove(studentType);
+            }
+            if (missing.isEmpty()) {
+                feedback.add("All required fields were declared");
+            } else {
+                feedback.add("Missing required field types " + missing);
             }
 
         }
