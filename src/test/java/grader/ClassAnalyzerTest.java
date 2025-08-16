@@ -88,4 +88,21 @@ public class ClassAnalyzerTest {
 
                 assertTrue(result.getDescription().contains("All required"));
         }
+
+        @Test
+        public void checkForMissingFieldTypes() throws IOException {
+                String code = FileUtil.readStudentCode(
+                                "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/ClassSample.java");
+                Parser parser = new JavaParser();
+                AST ast = parser.parse(code);
+
+                // Custom Configuration
+                ClassConfig config = new ClassConfig();
+                config.requiredFieldTypes = List.of("int", "String", "String");
+
+                ClassAnalyzer analyzer = new ClassAnalyzer(config);
+                AnalyzerResult result = analyzer.analyze(ast);
+
+                assertTrue(result.getDescription().contains("Missing required field types"));
+        }
 }
