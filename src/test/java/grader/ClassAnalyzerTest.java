@@ -102,6 +102,8 @@ public class ClassAnalyzerTest {
 
                 ClassAnalyzer analyzer = new ClassAnalyzer(config);
                 AnalyzerResult result = analyzer.analyze(ast);
+                System.out.println("------------Missing Field Types------------");
+                System.out.println(result.getDescription());
 
                 assertTrue(result.getDescription().contains("Missing required field types"));
         }

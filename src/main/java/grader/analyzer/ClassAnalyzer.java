@@ -99,7 +99,6 @@ public class ClassAnalyzer implements Analyzer {
             }
 
         }
-
         return new AnalyzerResult((String.join("\n", feedback)), score);
     }
 }
