@@ -1,5 +1,12 @@
 package grader.analyzer;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+
 import grader.analyzer.configs.ClassConfig;
 import grader.analyzer.configs.MethodSignatureConfig;
 import grader.parser.AST;
@@ -13,6 +20,16 @@ public class MethodSignatureAnalyzer implements Analyzer {
 
     @Override
     public AnalyzerResult analyze(AST ast) {
+        List<String> feedback = new ArrayList<>();
+        int score = 0;
+        CompilationUnit cu = ast.getRoot();
+
+        if (!configuration.requiredMethods.isEmpty()) {
+            // get all methods
+            // for each method check name, return type, and paramater list
+            // check if it is public, and static if required to be static
+            Optional<ClassOrInterfaceDeclaration> foundClass = cu.getClassByName(configuration.targetClassName);
+        }
         return new AnalyzerResult(null, 0);
     }
 }

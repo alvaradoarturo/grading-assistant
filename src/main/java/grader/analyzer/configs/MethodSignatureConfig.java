@@ -1,7 +1,11 @@
 package grader.analyzer.configs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MethodSignatureConfig {
-    public java.util.List<RequiredMethod> requiredMethods = java.util.List.of();
+    public String targetClassName = null;
+    public List<RequiredMethod> requiredMethods = new ArrayList<>();
 
     public static class RequiredMethod {
         public String name;
