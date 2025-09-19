@@ -54,4 +54,17 @@ public class PointResult {
         return earned ? "✅" : "❌";
     }
 
+    // get point on one line
+    public String formatOneLine() {
+        if (notes.isEmpty()) {
+            return symbol() + " " + label;
+        }
+        return symbol() + " " + label + " - " + String.join(" | ", notes);
+    }
+
+    @Override
+    public String toString() {
+        return "PointResult{id'" + id + "', label='" + label + "', earned=" + earned + ", notes=" + notes + "}";
+    }
+
 }
