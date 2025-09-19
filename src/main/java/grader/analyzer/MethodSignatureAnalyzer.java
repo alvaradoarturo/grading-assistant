@@ -29,6 +29,7 @@ public class MethodSignatureAnalyzer implements Analyzer {
             // for each method check name, return type, and paramater list
             // check if it is public, and static if required to be static
             Optional<ClassOrInterfaceDeclaration> foundClass = cu.getClassByName(configuration.targetClassName);
+
         }
         return new AnalyzerResult(null, 0);
     }
