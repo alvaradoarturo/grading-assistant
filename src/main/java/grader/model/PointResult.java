@@ -22,12 +22,12 @@ public class PointResult {
         this.notes = List.copyOf(notes == null ? List.of() : notes);
     }
 
-    public static PointResult pass() {
-        // TODO
+    public static PointResult pass(String id, String label, String... notes) {
+        return new PointResult(id, label, true, List.of(notes));
     }
 
-    public static PointResult fail() {
-        // TODO
+    public static PointResult fail(String id, String label, String... notes) {
+        return new PointResult(id, label, false, List.of(notes));
     }
 
     public String getId() {
