@@ -9,6 +9,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
 import grader.analyzer.configs.ClassConfig;
 import grader.analyzer.configs.MethodSignatureConfig;
+import grader.model.PointResult;
 import grader.parser.AST;
 
 public class MethodSignatureAnalyzer implements Analyzer {
@@ -19,8 +20,9 @@ public class MethodSignatureAnalyzer implements Analyzer {
     }
 
     @Override
-    public AnalyzerResult analyze(AST ast) {
+    public List<PointResult> analyze(AST ast) {
         List<String> feedback = new ArrayList<>();
+        List<PointResult> points = new ArrayList<>();
         int score = 0;
         CompilationUnit cu = ast.getRoot();
 
@@ -31,6 +33,6 @@ public class MethodSignatureAnalyzer implements Analyzer {
             Optional<ClassOrInterfaceDeclaration> foundClass = cu.getClassByName(configuration.targetClassName);
 
         }
-        return new AnalyzerResult(null, 0);
+        return points;
     }
 }

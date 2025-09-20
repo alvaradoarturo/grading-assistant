@@ -19,8 +19,8 @@ import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.WhileStmt;
 
-import grader.analyzer.AnalyzerResult;
 import grader.analyzer.configs.MethodCallAnalyzerConfig;
+import grader.model.PointResult;
 
 public class MethodCallAnalyzer implements Analyzer {
     private final MethodCallAnalyzerConfig configuration;
@@ -29,8 +29,9 @@ public class MethodCallAnalyzer implements Analyzer {
         this.configuration = configuration;
     }
 
-    public AnalyzerResult analyze(AST ast) {
+    public List<PointResult> analyze(AST ast) {
         CompilationUnit cu = ast.getRoot();
+        List<PointResult> points = new ArrayList<>();
         List<String> feedback = new ArrayList<>();
         int score = 0;
 
@@ -42,7 +43,7 @@ public class MethodCallAnalyzer implements Analyzer {
 
         if (methodCalls.isEmpty()) {
             feedback.add("No method calls");
-            return new AnalyzerResult((String.join("\n'", feedback)), score);
+            return points;
         }
 
         // Sees if there is a list of forbidden methods
@@ -162,7 +163,7 @@ public class MethodCallAnalyzer implements Analyzer {
             }
         }
 
-        return new AnalyzerResult((String.join("\n", feedback)), score);
+        return points;
     }
 
     public boolean isPartOfElseIf(IfStmt stmt) {

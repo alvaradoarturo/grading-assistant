@@ -8,6 +8,7 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.stmt.ForStmt;
 
 import grader.analyzer.configs.ArrayConfig;
+import grader.model.PointResult;
 import grader.parser.AST;
 
 public class ArrayAnalyzer implements Analyzer {
@@ -18,8 +19,9 @@ public class ArrayAnalyzer implements Analyzer {
     }
 
     @Override
-    public AnalyzerResult analyze(AST ast) {
+    public List<PointResult> analyze(AST ast) {
         CompilationUnit cu = ast.getRoot();
+        List<PointResult> points = new ArrayList<>();
         List<String> feedback = new ArrayList<>();
         int score = 0;
 
@@ -60,6 +62,6 @@ public class ArrayAnalyzer implements Analyzer {
 
         }
 
-        return new AnalyzerResult((String.join("\n", feedback)), score);
+        return points;
     }
 }

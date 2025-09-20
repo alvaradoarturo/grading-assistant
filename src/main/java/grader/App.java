@@ -3,7 +3,6 @@ package grader;
 import grader.parser.JavaParser;
 import grader.parser.Parser;
 import grader.runner.JUnitTestRunner;
-import grader.analyzer.AnalyzerResult;
 import grader.analyzer.ClassAnalyzer;
 import grader.analyzer.MethodCallAnalyzer;
 import grader.analyzer.configs.ClassConfig;
@@ -27,8 +26,6 @@ public class App {
         config.requiredConstructors = List.of(
                 List.of("String"));
         ClassAnalyzer analyzer = new ClassAnalyzer(config);
-
-        AnalyzerResult result = analyzer.analyze(ast);
 
         // System.out.println(result.getDescription());
 

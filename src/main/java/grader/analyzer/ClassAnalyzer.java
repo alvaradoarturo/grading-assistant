@@ -14,6 +14,7 @@ import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 
 import grader.analyzer.configs.ClassConfig;
+import grader.model.PointResult;
 import grader.parser.AST;
 
 public class ClassAnalyzer implements Analyzer {
@@ -24,7 +25,8 @@ public class ClassAnalyzer implements Analyzer {
     }
 
     @Override
-    public AnalyzerResult analyze(AST ast) {
+    public List<PointResult> analyze(AST ast) {
+        List<PointResult> points = new ArrayList<>();
         List<String> feedback = new ArrayList<>();
         int score = 0;
         CompilationUnit cu = ast.getRoot();
@@ -99,6 +101,6 @@ public class ClassAnalyzer implements Analyzer {
             }
 
         }
-        return new AnalyzerResult((String.join("\n", feedback)), score);
+        return points;
     }
 }

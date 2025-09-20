@@ -5,6 +5,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.stmt.*;
 
 import grader.analyzer.configs.LoopAnalyzerConfig;
+import grader.model.PointResult;
 import grader.parser.AST;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ public class LoopAnalyzer implements Analyzer {
     }
 
     @Override
-    public AnalyzerResult analyze(AST ast) {
+    public List<PointResult> analyze(AST ast) {
+        List<PointResult> points = new ArrayList<>();
         CompilationUnit cu = ast.getRoot();
         List<String> feedback = new ArrayList<>();
         int score = 0;
@@ -31,7 +33,7 @@ public class LoopAnalyzer implements Analyzer {
         // No loops are used
         if (loops.isEmpty()) {
             feedback.add("No loops found");
-            return new AnalyzerResult((String.join("\n", feedback)), score);
+            return points;
         }
 
         // iterate over list of loops
@@ -64,7 +66,7 @@ public class LoopAnalyzer implements Analyzer {
             }
         }
 
-        return new AnalyzerResult((String.join("\n", feedback)), score);
+        return points;
 
     }
 

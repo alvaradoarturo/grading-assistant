@@ -13,7 +13,7 @@ public class PointResult {
     // notes that might help me or student
     private final List<String> notes;
 
-    public PointResult(String id, String label, boolean earned, List<String>notes)}
+    public PointResult(String id, String label, boolean earned, List<String> notes)
 
     {
         this.id = id == null ? "" : id;

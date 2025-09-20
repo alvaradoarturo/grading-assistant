@@ -8,6 +8,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 
 import grader.analyzer.configs.RecursionConfig;
+import grader.model.PointResult;
 import grader.parser.AST;
 
 public class RecursionAnalyzer implements Analyzer {
@@ -17,8 +18,9 @@ public class RecursionAnalyzer implements Analyzer {
         this.configuration = configuration;
     }
 
-    public AnalyzerResult analyze(AST ast) {
+    public List<PointResult> analyze(AST ast) {
         CompilationUnit cu = ast.getRoot();
+        List<PointResult> points = new ArrayList<>();
         List<String> feedback = new ArrayList<>();
         int score = 0;
 
@@ -42,7 +44,7 @@ public class RecursionAnalyzer implements Analyzer {
                 feedback.add("Recursion Not Found");
             }
         }
-        return new AnalyzerResult((String.join("/n", feedback)), score);
+        return points;
     }
 
 }

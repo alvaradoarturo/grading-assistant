@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import grader.analyzer.AnalyzerResult;
 import grader.analyzer.ArrayAnalyzer;
 import grader.analyzer.LoopAnalyzer;
 import grader.analyzer.configs.ArrayConfig;
