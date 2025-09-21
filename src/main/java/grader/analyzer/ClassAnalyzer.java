@@ -1,12 +1,8 @@
 package grader.analyzer;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
-import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
@@ -27,23 +23,27 @@ public class ClassAnalyzer implements Analyzer {
     @Override
     public List<PointResult> analyze(AST ast) {
         List<PointResult> points = new ArrayList<>();
-        List<String> feedback = new ArrayList<>();
-        int score = 0;
         CompilationUnit cu = ast.getRoot();
 
-        // see if name of class is correct
+        // see if name of class is correct// will earn a point
         if (configuration.requiredClassName != null) {
+            String expected = configuration.requiredClassName;
             // get all class Declarations
             boolean foundClass = false;
             List<ClassOrInterfaceDeclaration> classes = cu.findAll(ClassOrInterfaceDeclaration.class);
             for (ClassOrInterfaceDeclaration singleClass : classes) {
-                if (singleClass.getNameAsString().equals(configuration.requiredClassName)) {
-                    feedback.add("Class: " + configuration.requiredClassName + "found");
+                if (singleClass.getNameAsString().equals(expected)) {
                     foundClass = true;
                 }
             }
+            if (foundClass) {
+                points.add(PointResult.pass("class.name.exists", "Correct class header (must not be private)",
+                        "Found class: " + expected));
+            }
+
             if (!foundClass) {
-                feedback.add("Class: " + configuration.requiredClassName + " not found");
+                points.add(PointResult.fail("class.name.missing", "Correct class header (must not be private)",
+                        "Missing class: " + expected));
             }
         }
 
@@ -69,38 +69,49 @@ public class ClassAnalyzer implements Analyzer {
                     }
                 }
                 if (found) {
-                    feedback.add("Matched Constructor: " + requiredParameters);
+                    points.add(PointResult.pass("class.constructors.exists",
+                            "Correct constructor header (must not be private)",
+                            "Found constructors: " + configuration.requiredConstructors));
                 } else {
-                    feedback.add("Missing Constructor: " + requiredParameters);
+                    points.add(PointResult.fail("class.constructors.missing",
+                            "Correct class header (must not be private)",
+                            "Missing constructors: " + configuration.requiredConstructors));
                 }
             }
         }
         if (!configuration.requiredFieldTypes.isEmpty()) {
             List<FieldDeclaration> fields = cu.findAll(FieldDeclaration.class);
             List<String> fieldTypes = new ArrayList<>();
+            boolean madePrivate = true;
 
             for (FieldDeclaration feild : fields) {
                 fieldTypes.add(feild.getElementType().asString());
 
                 if (!feild.isPrivate()) {
-                    feedback.add("field: " + feild.toString() + " is not private");
+                    points.add(PointResult.fail("class.fields.notPrivate",
+                            "Constructor correctly initializes instance variables",
+                            "Instance Variables are not private"));
+                    madePrivate = false;
                 }
             }
+            if (madePrivate) {
+                List<String> missing = new ArrayList<>(configuration.requiredFieldTypes);
 
-            List<String> missing = new ArrayList<>(configuration.requiredFieldTypes);
-            System.out.println(missing);
-
-            System.out.println("all field types " + fieldTypes);
-            for (String studentType : fieldTypes) {
-                missing.remove(studentType);
+                for (String studentType : fieldTypes) {
+                    missing.remove(studentType);
+                }
+                if (missing.isEmpty()) {
+                    points.add(PointResult.pass("class.fields.exists",
+                            "Constructor correctly initializes instance variables",
+                            "Correct instance variables: " + configuration.requiredFieldTypes));
+                } else {
+                    points.add(PointResult.fail("class.fields.missing",
+                            "Constructor correctly initializes instance variables",
+                            "Correct instance variables: " + configuration.requiredFieldTypes));
+                }
             }
-            if (missing.isEmpty()) {
-                feedback.add("All required fields were declared");
-            } else {
-                feedback.add("Missing required field types " + missing);
-            }
-
         }
         return points;
+
     }
 }
