@@ -22,8 +22,6 @@ public class ArrayAnalyzer implements Analyzer {
     public List<PointResult> analyze(AST ast) {
         CompilationUnit cu = ast.getRoot();
         List<PointResult> points = new ArrayList<>();
-        List<String> feedback = new ArrayList<>();
-        int score = 0;
 
         // sees if array is declared with required name
         if (configuration.requiredArrayName != "") {
@@ -32,15 +30,17 @@ public class ArrayAnalyzer implements Analyzer {
             for (VariableDeclarator currentDeclarator : arrayDeclarations) {
                 if (currentDeclarator.getType().isArrayType()
                         && currentDeclarator.getNameAsString().equals(configuration.requiredArrayName)) {
-                    feedback.add("Array Declaration Found");
-                    score += 1;
+                    points.add(PointResult.pass("array.initialized.exists",
+                            "Array correctly initialized",
+                            "Array Exists: " + configuration.requiredArrayName));
                     isFound = true;
                     break;
                 }
             }
             if (!isFound) {
-                feedback.add("Array Declaration Not Found");
-                score -= 1;
+                points.add(PointResult.fail("array.initialized.missing",
+                        "Array correctly initialized",
+                        "Array Does Not Exist: " + configuration.requiredArrayName));
             }
         }
 
@@ -55,9 +55,7 @@ public class ArrayAnalyzer implements Analyzer {
                 if (loop.getCompare().isPresent()) {
                     condition = loop.getCompare().get().toString();
                 }
-
-                feedback.add("Loops over correctly: " + (intitialization.contains("=0")
-                        && condition.contains("<" + configuration.requiredArrayName + ".length")));
+                // TODO
             }
 
         }
