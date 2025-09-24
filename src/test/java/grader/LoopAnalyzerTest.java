@@ -6,7 +6,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
 import grader.FileUtil;
 
-import grader.analyzer.AnalyzerResult;
 import grader.analyzer.LoopAnalyzer;
 import grader.analyzer.configs.LoopAnalyzerConfig;
 import grader.parser.Parser;

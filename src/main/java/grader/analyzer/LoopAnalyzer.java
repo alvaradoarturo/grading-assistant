@@ -22,8 +22,6 @@ public class LoopAnalyzer implements Analyzer {
     public List<PointResult> analyze(AST ast) {
         List<PointResult> points = new ArrayList<>();
         CompilationUnit cu = ast.getRoot();
-        List<String> feedback = new ArrayList<>();
-        int score = 0;
 
         // Get all loops in same list
         List<Node> loops = new ArrayList<>();
@@ -32,37 +30,38 @@ public class LoopAnalyzer implements Analyzer {
 
         // No loops are used
         if (loops.isEmpty()) {
-            feedback.add("No loops found");
+            points.add(PointResult.fail("loops.usage.missing", "Missing Loops", "Code contains no loops"));
             return points;
         }
 
         // iterate over list of loops
         for (Node loop : loops) {
             // checks for presence and requirement of loop
-            if (loop instanceof ForStmt && configuration.requireForLoop) {
-                feedback.add("For Loop was found!");
-                score++;
-            } else {
-                feedback.add("Missing For Loop");
-            }
-            if (loop instanceof WhileStmt && configuration.requireWhileLoop) {
-                feedback.add("While Loop was found");
-                score++;
-            } else {
-                feedback.add("Missing While Loop");
-            }
+            // if (loop instanceof ForStmt && configuration.requireForLoop) {
+            // feedback.add("For Loop was found!");
+            // score++;
+            // } else {
+            // feedback.add("Missing For Loop");
+            // }
+            // if (loop instanceof WhileStmt && configuration.requireWhileLoop) {
+            // feedback.add("While Loop was found");
+            // score++;
+            // } else {
+            // feedback.add("Missing While Loop");
+            // }
 
             // check loop condition and see if there are requirements
             if (!configuration.acceptedLoopConditions.isEmpty()) {
                 String loopCondition = getCondition(loop);
                 for (String condition : configuration.acceptedLoopConditions) {
                     if (condition.replaceAll("\\s+", "").equals(loopCondition)) {
-                        feedback.add("+ Matching Loop Condition");
-                        score++;
+                        points.add(PointResult.pass("loops.conditions.match", "Iterates using correct conditions",
+                                "Correct Condition Used: " + loopCondition));
                         break;
                     }
                 }
-                feedback.add("Invalid Loop Condition");
+                points.add(PointResult.fail("loops.conditions.missing", "Iterates using correct conditions",
+                        "Incorrect Condition Used"));
             }
         }
 
