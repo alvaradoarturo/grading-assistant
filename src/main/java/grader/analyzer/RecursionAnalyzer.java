@@ -21,8 +21,6 @@ public class RecursionAnalyzer implements Analyzer {
     public List<PointResult> analyze(AST ast) {
         CompilationUnit cu = ast.getRoot();
         List<PointResult> points = new ArrayList<>();
-        List<String> feedback = new ArrayList<>();
-        int score = 0;
 
         // get all methods
         List<MethodDeclaration> methods = cu.findAll(MethodDeclaration.class);
@@ -35,13 +33,15 @@ public class RecursionAnalyzer implements Analyzer {
                 List<MethodCallExpr> methodCalls = method.findAll(MethodCallExpr.class);
                 for (MethodCallExpr methodCall : methodCalls) {
                     if (methodCall.getNameAsString().equals(methodName)) {
-                        feedback.add("Recursion Found");
+                        points.add(PointResult.pass("recursion.usage.exists", "Solution Requires Recursion",
+                                "Implementation uses Recursion"));
                         recurionFound = true;
                     }
                 }
             }
             if (!recurionFound) {
-                feedback.add("Recursion Not Found");
+                points.add(PointResult.fail("recursion.usage.missing", "Solution Requires Recursion",
+                        "Implementation is missing Recursion"));
             }
         }
         return points;

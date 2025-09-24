@@ -7,12 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.expr.ArrayAccessExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.ForStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
@@ -32,8 +30,6 @@ public class MethodCallAnalyzer implements Analyzer {
     public List<PointResult> analyze(AST ast) {
         CompilationUnit cu = ast.getRoot();
         List<PointResult> points = new ArrayList<>();
-        List<String> feedback = new ArrayList<>();
-        int score = 0;
 
         // list of methodCalls
         List<MethodCallExpr> allMethods = new ArrayList<>();
@@ -42,7 +38,9 @@ public class MethodCallAnalyzer implements Analyzer {
         Set<String> methodCalls = allMethods.stream().map(MethodCallExpr::getNameAsString).collect(Collectors.toSet());
 
         if (methodCalls.isEmpty()) {
-            feedback.add("No method calls");
+            points.add(
+                    PointResult.fail("methods.usage.missing", "Missing Method Calls",
+                            "Code contains no method calls"));
             return points;
         }
 
@@ -50,21 +48,25 @@ public class MethodCallAnalyzer implements Analyzer {
         if (!configuration.forbiddenMethodCalls.isEmpty()) {
             for (String method : configuration.forbiddenMethodCalls) {
                 if (methodCalls.contains(method)) {
-                    feedback.add("Forbidden Method Called: " + method);
-                    score = -1000;
+                    points.add(
+                            PointResult.fail("methods.usage.forbidden", "Forbidden Method Calls",
+                                    "Code contains calls to forbidden methods"));
+                    return points;
                 }
             }
         }
         // Sees if there is a list of required methods
         if (!configuration.requiredMethodCalls.isEmpty()) {
-            for (String method : configuration.requiredMethodCalls) {
-                if (methodCalls.contains(method)) {
-                    feedback.add("Required Method Called: " + method);
-                    score++;
-                } else {
-                    feedback.add("Missing Method: " + method);
-                    score--;
-                }
+            // calls are met
+
+            boolean allPresent = methodCalls.containsAll(configuration.requiredMethodCalls);
+            if (allPresent) {
+                points.add(PointResult.pass("methods.requiredCalls.present", "All required calls are used",
+                        "Required Calls are all met"));
+            }
+            if (!allPresent) {
+                points.add(PointResult.fail("methods.requiredCalls.missing", "All required calls are used",
+                        "Required Calls are not met"));
             }
         }
         // Checks methods that need to be called in the context of a loop
@@ -74,13 +76,12 @@ public class MethodCallAnalyzer implements Analyzer {
             loops.addAll(cu.findAll(ForStmt.class));
             loops.addAll(cu.findAll(WhileStmt.class));
             if (loops.isEmpty()) {
-                feedback.add("No method called in context of a loop");
-                score--;
+                points.add(PointResult.fail("methods.methodsInLoop.missing",
+                        "Required call to methods in context of a loop",
+                        "Missing methods calls in context of a loop"));
             } else {
                 // Get all method calls that exist within loops
                 Set<String> methodsInLoops = new HashSet<>();
-                List<String> found = new ArrayList<>();
-                List<String> missing = new ArrayList<>();
 
                 for (Node loop : loops) {
                     List<MethodCallExpr> methodsFound = loop.findAll(MethodCallExpr.class);
@@ -90,21 +91,14 @@ public class MethodCallAnalyzer implements Analyzer {
                     }
                 }
                 // See if each required loop is found
-                for (String method : configuration.requiredCallsInLoop) {
-                    if (methodsInLoops.contains(method)) {
-                        found.add(method);
-                    } else {
-                        missing.add(method);
-                    }
-                }
-
-                // Add results to feedback
-                if (!found.isEmpty()) {
-                    feedback.add("Calls inside loops: " + String.join(", ", found));
-                }
-
-                if (!missing.isEmpty()) {
-                    feedback.add("Missing required method calls inside loops: " + String.join(", ", missing));
+                if (methodsInLoops.containsAll(configuration.requiredCallsInConditional)) {
+                    points.add(PointResult.pass("methods.methodsInLoop.exists",
+                            "Required call to methods in context of a loop",
+                            "Correct methods calls in context of a loop"));
+                } else {
+                    points.add(PointResult.fail("methods.methodsInLoop.missing",
+                            "Required call to methods in context of a loop",
+                            "Missing methods calls in context of a loop"));
                 }
             }
         }
@@ -115,9 +109,6 @@ public class MethodCallAnalyzer implements Analyzer {
             // Method calls inside of conditionals
             List<MethodCallExpr> methodsInsideConditionals = new ArrayList<>();
             Set<String> methodsNamesInsideConditionals = new HashSet<>();
-
-            List<String> found = new ArrayList<>();
-            List<String> missing = new ArrayList<>();
 
             // get all methods at appear in conditionals.... just once!
             for (IfStmt conditionalStmt : allIfs) {
@@ -147,19 +138,14 @@ public class MethodCallAnalyzer implements Analyzer {
             }
 
             // see if we find methods needed based on config file
-            for (String method : configuration.requiredCallsInConditional) {
-                if (methodsNamesInsideConditionals.contains(method)) {
-                    found.add(method);
-                } else {
-                    missing.add(method);
-                }
-            }
-            // Add results to feedback
-            if (!found.isEmpty()) {
-                feedback.add("Calls inside conditionals: " + String.join(", ", found));
-            }
-            if (!missing.isEmpty()) {
-                feedback.add("Missing required method calls inside conditionals: " + String.join(", ", missing));
+            if (methodsNamesInsideConditionals.containsAll(configuration.requiredCallsInConditional)) {
+                points.add(PointResult.pass("methods.methodsInsideConditional.exists",
+                        "Required call to methods in context of a conditional",
+                        "Correct methods calls in context of a conditional"));
+            } else {
+                points.add(PointResult.fail("methods.methodsInsideConditional.missing",
+                        "Required call to methods in context of a conditional",
+                        "Missing methods calls in context of a conditional"));
             }
         }
 

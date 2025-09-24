@@ -21,9 +21,7 @@ public class MethodSignatureAnalyzer implements Analyzer {
 
     @Override
     public List<PointResult> analyze(AST ast) {
-        List<String> feedback = new ArrayList<>();
         List<PointResult> points = new ArrayList<>();
-        int score = 0;
         CompilationUnit cu = ast.getRoot();
 
         if (!configuration.requiredMethods.isEmpty()) {
