@@ -1,8 +1,9 @@
 package grader.runner;
 
 import java.util.List;
-import grader.report.TestOutput;
+
+import grader.model.PointResult;
 
 public interface GradingTestRunner {
-    public List<TestOutput> runTests();
+    public List<PointResult> runTests();
 }

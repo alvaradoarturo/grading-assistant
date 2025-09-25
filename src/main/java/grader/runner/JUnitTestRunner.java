@@ -7,12 +7,12 @@ import javax.tools.ToolProvider;
 
 import javax.tools.JavaCompiler;
 
-import grader.report.TestOutput;
+import grader.model.PointResult;
 
 public class JUnitTestRunner implements GradingTestRunner {
-    public List<TestOutput> runTests() {
+    public List<PointResult> runTests() {
         File studentFile = new File(
-                "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/StudentSample.java");
+                "/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/StudentSamples/");
         // compile student code first
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int compileResult = compiler.run(null, null, System.err, studentFile.getPath());
@@ -22,6 +22,8 @@ public class JUnitTestRunner implements GradingTestRunner {
             System.err.println("Compilation Error");
             return Collections.emptyList();
         }
+
+        // Run JUnit tests against compiled code
         return Collections.emptyList();
     }
 }
