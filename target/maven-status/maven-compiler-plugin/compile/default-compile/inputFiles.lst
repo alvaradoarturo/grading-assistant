@@ -18,5 +18,6 @@
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/JavaParser.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/parser/Parser.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/runner/AnalyzerRunner.java
+/Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/runner/CompileResult.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/runner/GradingTestRunner.java
 /Users/theboy/Desktop/thesis/grading-assistant/grading-assistant/src/main/java/grader/runner/JUnitTestRunner.java
