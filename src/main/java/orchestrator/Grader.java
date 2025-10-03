@@ -16,6 +16,7 @@ import grader.parser.AST;
 import grader.parser.JavaParser;
 import grader.parser.Parser;
 import grader.runner.AnalyzerRunner;
+import grader.runner.JUnitTestRunner;
 
 public class Grader {
     /*
@@ -47,6 +48,19 @@ public class Grader {
             PointResult compileError = new PointResult("Compiler Error", "Compilation", false,
                     Arrays.asList("Compilation Error: " + e.getMessage()));
             report.addResult(compileError);
+        }
+
+        // unit tests next
+        try {
+            File srcFile = new File(sourcePath);
+            File testFile = new File(testPath);
+            JUnitTestRunner runner = new JUnitTestRunner(srcFile, testFile, testClass);
+            List<PointResult> testResults = runner.runTests();
+            report.addResults(testResults);
+        } catch (Exception e) {
+            PointResult testError = new PointResult("Test Error", "Unit Tests", false,
+                    Arrays.asList("Error running unit tests: " + e.getMessage()));
+            report.addResult(testError);
         }
 
         return report;
